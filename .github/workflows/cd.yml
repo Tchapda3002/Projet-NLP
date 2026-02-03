@@ -1,11 +1,22 @@
 # CD Pipeline - Deploy to AWS ECS
+# NOTE: Configure AWS secrets before enabling automatic deployment
 name: CD
 
 on:
-  push:
-    branches: [main]
-    tags: ['v*']
+  # Disabled automatic trigger - enable when AWS secrets are configured
+  # push:
+  #   branches: [main]
+  #   tags: ['v*']
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
 
 env:
   AWS_REGION: eu-west-1

@@ -4,7 +4,7 @@ FROM python:3.12-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    POETRY_VERSION=2.0.0 \
+    POETRY_VERSION=1.8.5 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_NO_INTERACTION=1
@@ -31,8 +31,8 @@ RUN poetry install --only main --no-root
 # Copy source code
 COPY src/ ./src/
 
-# Copy model (if exists)
-COPY data/models/ ./data/models/
+# Create data directories (model will be mounted or downloaded at runtime)
+RUN mkdir -p ./data/models
 
 # Install the project
 RUN poetry install --only main
